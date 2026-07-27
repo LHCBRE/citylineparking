@@ -1,0 +1,1 @@
+window.lotConfig={p1:{apiId:1,capacity:864,x:13,y:31},p2:{apiId:2,capacity:344,x:41,y:31},p5:{apiId:5,capacity:345,x:11,y:82}};

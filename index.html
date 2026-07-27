@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CityLine Parking Availability</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrapper">
+  <div id="map-container">
+    <img src="assets/site-map.svg" id="site-map" alt="Parking Map">
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="dot green"></span>Available</div>
+    <div class="legend-item"><span class="dot yellow"></span>Limited</div>
+    <div class="legend-item"><span class="dot red"></span>Nearly Full</div>
+  </div>
+
+  <div id="update-time"></div>
+</div>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
