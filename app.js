@@ -1,299 +1,182 @@
-alert("APP JS VERSION TEST");
-console.log("NEW APP.JS LOADED!");
-
-// =========================
-// LOAD SVG
-// =========================
-
 async function loadSVG() {
+  const response = await fetch("assets/site-map.svg");
+  const svgText = await response.text();
 
-    console.log("Loading SVG...");
-
-    const response = await fetch(
-        "assets/site-map.svg"
-    );
-
-    const svgText =
-        await response.text();
-
-    document.getElementById(
-        "svg-container"
-    ).innerHTML = svgText;
-
-    console.log("SVG loaded.");
-
+  document.getElementById("svg-container").innerHTML = svgText;
 }
-
-// =========================
-// CONFIG
-// =========================
 
 window.demoData = {
-
-    p1: {
-        available: 686
-    },
-
-    p2: {
-        available: 241
-    },
-
-    p5: {
-        available: 112
-    }
-
+  p1: { available: 686 },
+  p2: { available: 241 },
+  p5: { available: 112 }
 };
 
-// =========================
-// BADGES
-// =========================
-
 function createBadges() {
+  const container = document.getElementById("map-container");
 
-    const container =
-        document.getElementById(
-            "map-container"
-        );
+  Object.keys(lotConfig).forEach((lot) => {
+    const badge = document.createElement("div");
 
-    Object.entries(
-        lotConfig
-    ).forEach(([lot]) => {
+    badge.id = `badge-${lot}`;
+    badge.className = "parking-badge";
 
-        const badge =
-            document.createElement("div");
-
-        badge.id =
-            "badge-${lot}";
-
-        badge.className =
-            "parking-badge";
-
-        badge.innerHTML = "
+    badge.innerHTML = `
       <div class="parking-count">0</div>
       <div class="parking-sub">SPACES</div>
-    ";
+    `;
 
-        container.appendChild(
-            badge
-        );
-
-    });
-
+    container.appendChild(badge);
+  });
 }
 
-// =========================
-// STATUS
-// =========================
+function getStatus(available, capacity) {
+  const ratio = available / capacity;
 
-function getStatus(
-    available,
-    capacity
-) {
+  if (ratio > 0.3) return "green";
+  if (ratio > 0.1) return "yellow";
 
-    const ratio =
-        available / capacity;
-
-    if (ratio > .30) {
-        return "green";
-    }
-
-    if (ratio > .10) {
-        return "yellow";
-    }
-
-    return "red";
-
+  return "red";
 }
 
-// =========================
-// COLOR GARAGES
-// =========================
+function animateNumber(el, start, end, duration = 800) {
+  const startTime = performance.now();
 
-function colorParkingFill(
-    lot,
-    status
-) {
-
-    const colors = {
-
-        green: "#31a354",
-        yellow: "#f4b400",
-        red: "#d93025"
-
-    };
-
-    const fill =
-        document.getElementById(
-            "${lot}-fill"
-        );
-
-    if (fill) {
-
-        fill.style.fill =
-            colors[status];
-
-    }
-
-}
-
-// =========================
-// COUNT ANIMATION
-// =========================
-
-function animateNumber(
-    el,
-    start,
-    end,
-    duration = 600
-) {
-
-    const startTime =
-        performance.now();
-
-    function step(now) {
-
-        const progress =
-            Math.min(
-                (now - startTime) /
-                duration,
-                1
-            );
-
-        const value =
-            Math.round(
-                start +
-                ((end - start) *
-                    progress)
-            );
-
-        el.textContent =
-            value;
-
-        if (progress < 1) {
-
-            requestAnimationFrame(
-                step
-            );
-
-        }
-
-    }
-
-    requestAnimationFrame(
-        step
+  function step(now) {
+    const progress = Math.min(
+      (now - startTime) / duration,
+      1
     );
 
-}
+    const value = Math.round(
+      start + (end - start) * progress
+    );
 
-// =========================
-// TIMESTAMP
-// =========================
+    el.textContent = value;
+
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    }
+  }
+
+  requestAnimationFrame(step);
+}
 
 function updateTimestamp() {
+  const el = document.getElementById("update-time");
 
-    document.getElementById(
-            "update-time"
-        ).textContent =
-        "Last Updated: " +
-        new Date()
-        .toLocaleTimeString();
-
+  if (el) {
+    el.textContent =
+      "Last Updated: " +
+      new Date().toLocaleTimeString();
+  }
 }
 
-// =========================
-// RENDER
-// =========================
+function colorParkingFill(lot, status) {
+  const colors = {
+    green: "#31a354",
+    yellow: "#f4b400",
+    red: "#d93025"
+  };
+
+  const fill = document.getElementById(`${lot}-fill`);
+
+  if (fill) {
+    fill.style.fill = colors[status];
+  }
+}
 
 function renderMap() {
+  Object.entries(lotConfig).forEach(([lot, cfg]) => {
+    const badge = document.getElementById(
+      `badge-${lot}`
+    );
 
-    Object.entries(
-        lotConfig
-    ).forEach(([lot, cfg]) => {
+    if (!badge) return;
 
-        const badge =
-            document.getElementById(
-                "badge-${lot}"
-            );
+    badge.style.left = cfg.x + "%";
+    badge.style.top = cfg.y + "%";
 
-        badge.style.left =
-            cfg.x + "%";
+    badge.classList.remove(
+      "status-green",
+      "status-yellow",
+      "status-red"
+    );
 
-        badge.style.top =
-            cfg.y + "%";
+    const available =
+      demoData[lot].available;
 
-        badge.classList.remove(
-            "status-green",
-            "status-yellow",
-            "status-red"
-        );
+    const status = getStatus(
+      available,
+      cfg.capacity
+    );
 
-        const available =
-            demoData[lot]
-            .available;
+    badge.classList.add(
+      `status-${status}`
+    );
 
-        const status =
-            getStatus(
-                available,
-                cfg.capacity
-            );
+    colorParkingFill(lot, status);
 
-        badge.classList.add(
-            "status-${status}"
-        );
+    const count =
+      badge.querySelector(
+        ".parking-count"
+      );
 
-        colorParkingFill(
-            lot,
-            status
-        );
+    animateNumber(
+      count,
+      parseInt(count.textContent) || 0,
+      available
+    );
+  });
 
-        const count =
-            badge.querySelector(
-                ".parking-count"
-            );
-
-        animateNumber(
-            count,
-            parseInt(
-                count.textContent
-            ) || 0,
-            available
-        );
-
-    });
-
-    updateTimestamp();
-
+  updateTimestamp();
 }
 
-// =========================
-// DEMO COMMANDS
-// =========================
-
-window.renderMap =
-    renderMap;
+window.renderMap = renderMap;
 
 window.scenarios = {
+  normal() {
+    demoData.p1.available = 686;
+    demoData.p2.available = 241;
+    demoData.p5.available = 112;
+    renderMap();
+  },
 
-        normal() {
+  busy() {
+    demoData.p1.available = 140;
+    demoData.p2.available = 82;
+    demoData.p5.available = 37;
+    renderMap();
+  },
 
-            demoData.p1.available = 686;
-            demoData.p2.available = 241;
-            demoData.p5.available = 112;
+  full() {
+    demoData.p1.available = 8;
+    demoData.p2.available = 5;
+    demoData.p5.available = 2;
+    renderMap();
+  }
+};
 
-            renderMap();
+window.randomizeParking = function () {
+  Object.entries(demoData).forEach(
+    ([lot, data]) => {
+      data.available = Math.floor(
+        Math.random() *
+          lotConfig[lot].capacity
+      );
+    }
+  );
 
-        },
+  renderMap();
+};
 
-        busy() {
+window.onload = async function () {
+  await loadSVG();
 
-            demoData.p1.available = 140;
-            demoData.p2.available = 82;
-            demoData.p5.available = 37;
+  createBadges();
 
-            renderMap();
+  renderMap();
 
-        },
-
-        full() {
-
-            demoData.p1.
+  console.log(
+    "CityLine Parking Loaded"
+  );
+};
