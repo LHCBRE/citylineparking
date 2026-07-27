@@ -20,10 +20,12 @@ function createBadges() {
     badge.id = `badge-${lot}`;
     badge.className = "parking-badge";
 
-    badge.innerHTML = `
-      <div class="parking-count">0</div>
-      <div class="parking-sub">SPACES</div>
-    `;
+badge.innerHTML = `
+<div class="parking-count">0</div>
+<div class="parking-sub">
+SPACES AVAILABLE
+</div>
+`;
 
     container.appendChild(badge);
   });
@@ -118,7 +120,7 @@ function renderMap() {
     );
 
     if(status === "yellow"){
-badge.style.color = "#1f2937";
+badge.style.color = "#f8eb79";
 }
 else{
 badge.style.color = "#ffffff";
