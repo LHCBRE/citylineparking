@@ -1,4 +1,12 @@
-body{margin:0;background:#f4f4f4;font-family:Arial,sans-serif}.wrapper{max-width:1400px;margin:auto}#map-container{position:relative}#site-map{display:block;width:100%}.parking-badge{position:absolute;transform:translate(-50%,-50%);text-align:center;padding:.5rem .75rem;border-radius:12px;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.2);min-width:85px;z-index:10}.parking-count{font-size:clamp(24px,2.5vw,42px);font-weight:800;line-height:1}.parking-sub{font-size:clamp(10px,.7vw,14px);margin-top:4px}.status-green{background:#31a354}.status-yellow{background:#f4b400}.status-red{background:#d93025}.legend{display:flex;justify-content:center;gap:24px;padding:20px;flex-wrap:wrap}.legend-item{display:flex;align-items:center;gap:8px}.dot{width:12px;height:12px;border-radius:50%}.green{background:#31a354}.yellow{background:#f4b400}.red{background:#d93025}#update-time{text-align:center;color:#666;padding-bottom:20px}
+body{margin:0;background:#f4f4f4;font-family:Arial,sans-serif}.wrapper{max-width:1400px;margin:auto}#map-container{position:relative}#site-map{display:block;width:100%}.parking-badge{
+position:absolute;
+transform:translate(-50%,-50%);
+text-align:center;
+background:transparent;
+box-shadow:none;
+min-width:85px;
+z-index:10;
+}.parking-count{font-size:clamp(24px,2.5vw,42px);font-weight:800;line-height:1}.parking-sub{font-size:clamp(10px,.7vw,14px);margin-top:4px}.status-green{background:#31a354}.status-yellow{background:#f4b400}.status-red{background:#d93025}.legend{display:flex;justify-content:center;gap:24px;padding:20px;flex-wrap:wrap}.legend-item{display:flex;align-items:center;gap:8px}.dot{width:12px;height:12px;border-radius:50%}.green{background:#31a354}.yellow{background:#f4b400}.red{background:#d93025}#update-time{text-align:center;color:#666;padding-bottom:20px}
 #svg-container svg{
 width:100%;
 height:auto;
