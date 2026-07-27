@@ -2,10 +2,10 @@ body{margin:0;background:#f4f4f4;font-family:Arial,sans-serif}.wrapper{max-width
 position:absolute;
 transform:translate(-50%,-50%);
 text-align:center;
-background:transparent;
+background:none;
 box-shadow:none;
 min-width:85px;
-  text-shadow:0 1px 3px rgba(0,0,0,.4);
+  text-shadow:0 1px 3px rgba(0,0,0,.1);
 z-index:10;
 }.parking-count{
 font-size:clamp(
