@@ -96,7 +96,7 @@ function colorParkingFill(lot, status) {
   if (fill) {
     fill.style.fill = colors[status];
   }
-}
+
 
 function renderMap() {
   Object.entries(lotConfig).forEach(([lot, cfg]) => {
