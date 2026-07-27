@@ -1,3 +1,17 @@
+async function loadSVG(){
+  const response =
+    await fetch(
+      "assets/site-map.svg"
+    );
+  const svgText =
+    await response.text();
+  document
+    .getElementById(
+      "svg-container"
+    )
+    .innerHTML =
+      svgText;
+}
 window.demoData={p1:{available:686},p2:{available:241},p5:{available:112}};
 function createBadges(){const c=document.getElementById("map-container");Object.entries(lotConfig).forEach(([lot])=>{const b=document.createElement("div");b.id=`badge-${lot}`;b.className='parking-badge';b.innerHTML='<div class="parking-count">0</div><div class="parking-sub">SPACES</div>';c.appendChild(b);});}
 function getStatus(a,c){const r=a/c; if(r>.30)return 'green'; if(r>.10)return 'yellow'; return 'red';}
@@ -7,4 +21,8 @@ function renderMap(){Object.entries(lotConfig).forEach(([lot,cfg])=>{const badge
 window.renderMap=renderMap;
 window.scenarios={normal(){demoData.p1.available=686;demoData.p2.available=241;demoData.p5.available=112;renderMap();},busy(){demoData.p1.available=140;demoData.p2.available=82;demoData.p5.available=37;renderMap();},full(){demoData.p1.available=8;demoData.p2.available=5;demoData.p5.available=2;renderMap();}};
 window.randomizeParking=function(){Object.entries(demoData).forEach(([lot,data])=>{data.available=Math.floor(Math.random()*lotConfig[lot].capacity);}); const s=Object.entries(demoData).map(([lot,d])=>getStatus(d.available,lotConfig[lot].capacity)); if(s.every(v=>v===s[0])) demoData.p1.available=Math.floor(lotConfig.p1.capacity*0.08); renderMap();};
-createBadges();renderMap();
+(async function(){
+  await loadSVG();
+  createBadges();
+  renderMap();
+})();
