@@ -74,9 +74,9 @@ function updateTimestamp() {
 function colorParkingFill(lot, status) {
 
   const colors = {
-    green: "#31a354",
-    yellow: "#f4b400",
-    red: "#d93025"
+    green: "#52725f",
+    yellow: "#f8eb79",
+    red: "#f74f1a"
   };
 
   const fills =
