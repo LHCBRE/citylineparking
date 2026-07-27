@@ -110,6 +110,13 @@ function renderMap() {
       cfg.capacity
     );
 
+    if(status === "yellow"){
+badge.style.color = "#1f2937";
+}
+else{
+badge.style.color = "#ffffff";
+}
+
     badge.classList.add(
       `status-${status}`
     );
