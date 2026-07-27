@@ -1,3 +1,4 @@
+alert("APP JS VERSION TEST");
 console.log("NEW APP.JS LOADED!");
 
 // =========================
