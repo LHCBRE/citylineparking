@@ -72,11 +72,24 @@ function updateTimestamp() {
 }
 
 function colorParkingFill(lot, status) {
+
   const colors = {
     green: "#31a354",
     yellow: "#f4b400",
     red: "#d93025"
   };
+
+  const fills =
+    document.querySelectorAll(
+      `[id^="${lot}-fill"]`
+    );
+
+  fills.forEach(fill => {
+    fill.style.fill =
+      colors[status];
+  });
+
+}
 
   const fill = document.getElementById(`${lot}-fill`);
 
