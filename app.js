@@ -7,20 +7,20 @@ console.log("NEW APP.JS LOADED!");
 
 async function loadSVG() {
 
-  console.log("Loading SVG...");
+    console.log("Loading SVG...");
 
-  const response = await fetch(
-    "assets/site-map.svg"
-  );
+    const response = await fetch(
+        "assets/site-map.svg"
+    );
 
-  const svgText =
-    await response.text();
+    const svgText =
+        await response.text();
 
-  document.getElementById(
-    "svg-container"
-  ).innerHTML = svgText;
+    document.getElementById(
+        "svg-container"
+    ).innerHTML = svgText;
 
-  console.log("SVG loaded.");
+    console.log("SVG loaded.");
 
 }
 
@@ -30,17 +30,17 @@ async function loadSVG() {
 
 window.demoData = {
 
-  p1: {
-    available: 686
-  },
+    p1: {
+        available: 686
+    },
 
-  p2: {
-    available: 241
-  },
+    p2: {
+        available: 241
+    },
 
-  p5: {
-    available: 112
-  }
+    p5: {
+        available: 112
+    }
 
 };
 
@@ -48,36 +48,36 @@ window.demoData = {
 // BADGES
 // =========================
 
-function createBadges(){
+function createBadges() {
 
-  const container =
-    document.getElementById(
-      "map-container"
-    );
+    const container =
+        document.getElementById(
+            "map-container"
+        );
 
-  Object.entries(
-    lotConfig
-  ).forEach(([lot]) => {
+    Object.entries(
+        lotConfig
+    ).forEach(([lot]) => {
 
-    const badge =
-      document.createElement("div");
+        const badge =
+            document.createElement("div");
 
-    badge.id =
-      `badge-${lot}`;
+        badge.id =
+            "badge-${lot}";
 
-    badge.className =
-      "parking-badge";
+        badge.className =
+            "parking-badge";
 
-    badge.innerHTML = `
+        badge.innerHTML = "
       <div class="parking-count">0</div>
       <div class="parking-sub">SPACES</div>
-    `;
+    ";
 
-    container.appendChild(
-      badge
-    );
+        container.appendChild(
+            badge
+        );
 
-  });
+    });
 
 }
 
@@ -86,22 +86,22 @@ function createBadges(){
 // =========================
 
 function getStatus(
-  available,
-  capacity
-){
+    available,
+    capacity
+) {
 
-  const ratio =
-    available / capacity;
+    const ratio =
+        available / capacity;
 
-  if(ratio > .30){
-    return "green";
-  }
+    if (ratio > .30) {
+        return "green";
+    }
 
-  if(ratio > .10){
-    return "yellow";
-  }
+    if (ratio > .10) {
+        return "yellow";
+    }
 
-  return "red";
+    return "red";
 
 }
 
@@ -110,29 +110,29 @@ function getStatus(
 // =========================
 
 function colorParkingFill(
-  lot,
-  status
-){
+    lot,
+    status
+) {
 
-  const colors = {
+    const colors = {
 
-    green : "#31a354",
-    yellow: "#f4b400",
-    red   : "#d93025"
+        green: "#31a354",
+        yellow: "#f4b400",
+        red: "#d93025"
 
-  };
+    };
 
-  const fill =
-    document.getElementById(
-      `${lot}-fill`
-    );
+    const fill =
+        document.getElementById(
+            "${lot}-fill"
+        );
 
-  if(fill){
+    if (fill) {
 
-    fill.style.fill =
-      colors[status];
+        fill.style.fill =
+            colors[status];
 
-  }
+    }
 
 }
 
@@ -141,47 +141,47 @@ function colorParkingFill(
 // =========================
 
 function animateNumber(
-  el,
-  start,
-  end,
-  duration = 600
-){
+    el,
+    start,
+    end,
+    duration = 600
+) {
 
-  const startTime =
-    performance.now();
+    const startTime =
+        performance.now();
 
-  function step(now){
+    function step(now) {
 
-    const progress =
-      Math.min(
-        (now - startTime) /
-        duration,
-        1
-      );
+        const progress =
+            Math.min(
+                (now - startTime) /
+                duration,
+                1
+            );
 
-    const value =
-      Math.round(
-        start +
-        ((end - start)
-        * progress)
-      );
+        const value =
+            Math.round(
+                start +
+                ((end - start) *
+                    progress)
+            );
 
-    el.textContent =
-      value;
+        el.textContent =
+            value;
 
-    if(progress < 1){
+        if (progress < 1) {
 
-      requestAnimationFrame(
-        step
-      );
+            requestAnimationFrame(
+                step
+            );
+
+        }
 
     }
 
-  }
-
-  requestAnimationFrame(
-    step
-  );
+    requestAnimationFrame(
+        step
+    );
 
 }
 
@@ -189,15 +189,14 @@ function animateNumber(
 // TIMESTAMP
 // =========================
 
-function updateTimestamp(){
+function updateTimestamp() {
 
-  document.getElementById(
-    "update-time"
-  ).textContent =
-    "Last Updated: "
-    +
-    new Date()
-      .toLocaleTimeString();
+    document.getElementById(
+            "update-time"
+        ).textContent =
+        "Last Updated: " +
+        new Date()
+        .toLocaleTimeString();
 
 }
 
@@ -205,64 +204,64 @@ function updateTimestamp(){
 // RENDER
 // =========================
 
-function renderMap(){
+function renderMap() {
 
-  Object.entries(
-    lotConfig
-  ).forEach(([lot,cfg]) => {
+    Object.entries(
+        lotConfig
+    ).forEach(([lot, cfg]) => {
 
-    const badge =
-      document.getElementById(
-        `badge-${lot}`
-      );
+        const badge =
+            document.getElementById(
+                "badge-${lot}"
+            );
 
-    badge.style.left =
-      cfg.x + "%";
+        badge.style.left =
+            cfg.x + "%";
 
-    badge.style.top =
-      cfg.y + "%";
+        badge.style.top =
+            cfg.y + "%";
 
-    badge.classList.remove(
-      "status-green",
-      "status-yellow",
-      "status-red"
-    );
+        badge.classList.remove(
+            "status-green",
+            "status-yellow",
+            "status-red"
+        );
 
-    const available =
-      demoData[lot]
-        .available;
+        const available =
+            demoData[lot]
+            .available;
 
-    const status =
-      getStatus(
-        available,
-        cfg.capacity
-      );
+        const status =
+            getStatus(
+                available,
+                cfg.capacity
+            );
 
-    badge.classList.add(
-      `status-${status}`
-    );
+        badge.classList.add(
+            "status-${status}"
+        );
 
-    colorParkingFill(
-      lot,
-      status
-    );
+        colorParkingFill(
+            lot,
+            status
+        );
 
-    const count =
-      badge.querySelector(
-        ".parking-count"
-      );
+        const count =
+            badge.querySelector(
+                ".parking-count"
+            );
 
-    animateNumber(
-      count,
-      parseInt(
-        count.textContent
-      ) || 0,
-      available
-    );
+        animateNumber(
+            count,
+            parseInt(
+                count.textContent
+            ) || 0,
+            available
+        );
 
-  });
+    });
 
-  updateTimestamp();
+    updateTimestamp();
 
 }
 
@@ -271,30 +270,30 @@ function renderMap(){
 // =========================
 
 window.renderMap =
-  renderMap;
+    renderMap;
 
 window.scenarios = {
 
-  normal(){
+        normal() {
 
-    demoData.p1.available = 686;
-    demoData.p2.available = 241;
-    demoData.p5.available = 112;
+            demoData.p1.available = 686;
+            demoData.p2.available = 241;
+            demoData.p5.available = 112;
 
-    renderMap();
+            renderMap();
 
-  },
+        },
 
-  busy(){
+        busy() {
 
-    demoData.p1.available = 140;
-    demoData.p2.available = 82;
-    demoData.p5.available = 37;
+            demoData.p1.available = 140;
+            demoData.p2.available = 82;
+            demoData.p5.available = 37;
 
-    renderMap();
+            renderMap();
 
-  },
+        },
 
-  full(){
+        full() {
 
-    demoData.p1.
+            demoData.p1.
