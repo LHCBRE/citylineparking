@@ -120,7 +120,7 @@ function renderMap() {
     );
 
     if(status === "yellow"){
-badge.style.color = "#f8eb79";
+badge.style.color = "#14252f";
 }
 else{
 badge.style.color = "#ffffff";
